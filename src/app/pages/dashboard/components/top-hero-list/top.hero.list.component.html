@@ -1,0 +1,5 @@
+<div class="heroes-menu">
+    <a *ngFor="let hero of heroes" (click)="changePage('detail', hero)">
+        {{hero?.name}}
+    </a>
+</div>
