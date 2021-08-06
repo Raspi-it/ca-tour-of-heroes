@@ -5,8 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { PreloadAllModules, RouterModule } from '@angular/router';
 
-import { DataFeatureModule } from './features/data/data.feature.module';
-
 import { NgModule } from '@angular/core';
 
 import { NgxsModule } from '@ngxs/store';
@@ -15,53 +13,26 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 
 import { CoreModule } from './core/core.module';
 
-import { DashboardPageState } from './pages/dashboard/dashboard.page.state';
-
 import { AppComponent } from './app.component';
-import { DashboardPage } from './pages/dashboard/dashboard.page';
-import { TopHeroListComponent } from './pages/dashboard/components/top-hero-list/top.hero.list.component';
-import { HeroSearchComponent } from './pages/dashboard/components/hero-search/hero.search.component';
-import { DetailPage } from './pages/detail/detail.page';
-import { PushMessagesFeatureModule } from './features/push-messages/push.messages.feature.module';
-import { AppRoutingModule } from './app-routing.module';
-import { HeroesModule } from './pages/heroes/heroes.module';
-import { HeroPage } from './pages/heroes/heroes.page';
-import { HomePage } from './pages/home/home.page';
-import { HomeModule } from './pages/home/home.module';
-import { MessagesComponent } from './pages/home/components/messages/messages.component';
-import { NavigationComponent } from './pages/home/components/navigation/navigation.component';
-
+import { AppStore } from './app.store';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-
-    //Komponenten der Pages -> sollten eig nicht hier drin sein, Danny fragen
-    HeroSearchComponent,
-    TopHeroListComponent,
-    DashboardPage,
-    DetailPage,
-    NavigationComponent,
-    MessagesComponent,
-    HeroPage,
-    HomePage
-  ],
+  declarations: [AppComponent],
   imports: [
-    NgxsModule.forRoot([DashboardPageState], {developmentMode: !environment.production}),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot(),
-    
-    //Muss das hier rein, oder kann das in tieferen ebenen rein?
-    DataFeatureModule,
-    PushMessagesFeatureModule,
-    HeroesModule,
-    AppRoutingModule,
-    HomeModule,
+
+    // Common Module in Page Module reinschmeißen
+    // Modules aufräumen
+    // Actions nur unter passender Page (ggf. zstl Actions)
+    // Ngxs for Root -> AppState / Ngxs for Feature in Page Module
 
     BrowserModule,
     FormsModule,
     HttpClientModule,
     CoreModule,
+
+    NgxsModule.forRoot([AppStore], {developmentMode: !environment.production}),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot(),
     RouterModule.forRoot([
       {
         path: 'home',

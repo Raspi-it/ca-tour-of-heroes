@@ -5,7 +5,7 @@ import { AbstractAddHeroDataSource } from "../data-source/abstract.add.hero.data
 import { AbstractAddHeroRepository } from "./abstract.add.hero.repository";
 @Injectable()
 export class AddHeroRepository extends AbstractAddHeroRepository {
-    constructor(private readonly dataSource: AbstractAddHeroRepository){
+    constructor(private readonly dataSource: AbstractAddHeroDataSource){
         super();
     }
 

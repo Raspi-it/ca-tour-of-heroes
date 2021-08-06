@@ -1,8 +1,5 @@
 import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext, Store } from "@ngxs/store";
-import { from } from "rxjs";
-import { tap } from "rxjs/operators";
-import { AbstractPushMessagesUseCase } from "./features/messages/domain/use-case/abstract.push.messages.use.case";
 
 export class StartLoadingAction {
     static readonly type = '[APP] loading start';
@@ -12,12 +9,21 @@ export class FinishLoadingAction {
     static readonly type = '[APP] loading done';
 }
 
+export class ChangeVisibilityAction {
+    static readonly type = '[VISIBILITY] viewstate of components';
+    constructor(public readonly payload: string) {}
+}
+
 export interface AppStateModel {
     loading?: boolean;
+    visibility?: string;
 }
 
 @State<AppStateModel>({
-    name: 'app'
+    name: 'app',
+    defaults: {
+        visibility: 'dashboard'
+    }
 })
 
 @Injectable()
@@ -27,6 +33,17 @@ export class AppStore {
         return loading;
     }
 
+    @Selector()
+    static visibility({ visibility }: AppStateModel) {
+        return visibility;
+    }
+
+    @Action(ChangeVisibilityAction)
+    changeVisibility({ patchState }: StateContext<AppStateModel>, { payload }: ChangeVisibilityAction) {
+        return patchState({
+                        visibility: payload
+                    });
+    }
 
     constructor() { }
 

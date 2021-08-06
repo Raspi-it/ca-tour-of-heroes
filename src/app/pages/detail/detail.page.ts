@@ -1,10 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { Location } from '@angular/common';
 import { HeroEntity } from "src/app/core/domain/entity/hero.entity";
-import { ActivatedRoute } from "@angular/router";
 import { UpdateHeroAction } from "./detail.page.state";
 import { Store } from "@ngxs/store";
-import { ChangeVisibilityAction } from "../dashboard/dashboard.page.state";
+import { ChangeVisibilityAction } from "src/app/app.store";
 
 @Component({
     selector: 'app-detail',
@@ -19,9 +17,7 @@ export class DetailPage implements OnInit {
     hero_input: string;
 
     constructor(
-        private store: Store,
-        private route: ActivatedRoute,
-        private location: Location
+        private store: Store
     ) { }
 
     ngOnInit(){

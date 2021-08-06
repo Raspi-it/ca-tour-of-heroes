@@ -21,10 +21,11 @@ export class ClearMessageAction {
 
 export interface HomePageStateModel {
     messages?: string[];
+    visibility?: string;
 }
 
 @State<HomePageStateModel>({
-    name: 'home',
+    name: 'home'
 })
 
 @Injectable()

@@ -29,4 +29,4 @@ import { GetMessagesUseCase } from "./domain/use-case/get.messages.use.case";
         }
         ]
 })
-export class MessagesFeatureModule { }
+export class GetMessagesFeatureModule { }

@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
+import { ChangeVisibilityAction } from "src/app/app.store";
 import { HeroEntity } from "src/app/core/domain/entity/hero.entity";
-import { ChangeVisibilityAction, DashboardPageState, GetHeroesAction, SetHeroAction } from "./dashboard.page.state";
+import { DashboardPageState, GetHeroesAction, SetHeroAction } from "./dashboard.page.state";
+
 
 @Component({
     selector: 'app-dashboard',

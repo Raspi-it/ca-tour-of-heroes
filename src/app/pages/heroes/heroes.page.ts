@@ -1,16 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
+import { ChangeVisibilityAction } from 'src/app/app.store';
 import { HeroModel } from 'src/app/core/data/models/hero.model';
 import { HeroEntity } from 'src/app/core/domain/entity/hero.entity';
-import { ChangeVisibilityAction, SetHeroAction } from '../dashboard/dashboard.page.state';
-import { AddHeroAction, DeleteHeroAction } from '../detail/detail.page.state';
+import { SetHeroAction } from '../dashboard/dashboard.page.state';
+import { AddHeroAction, DeleteHeroAction } from './heroes.page.state';
 
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.page.html',
   styleUrls: ['./heroes.page.css']
 })
-export class HeroPage implements OnInit {
+export class HeroesPage implements OnInit {
   
     @Input() heroes: HeroEntity[];
     @Input() load: string;
@@ -40,8 +41,8 @@ export class HeroPage implements OnInit {
     }
 
     async delete(hero: HeroEntity) {
-        this.heroes = this.heroes.filter(h => h !== hero);
-        console.log('worked');
+        //this.heroes = this.heroes.filter(h => h !== hero);
+        console.log(hero);
         await this.store.dispatch(new DeleteHeroAction(this.heroes)).toPromise();
     }
 

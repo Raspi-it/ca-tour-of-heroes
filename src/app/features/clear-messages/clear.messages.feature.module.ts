@@ -29,4 +29,4 @@ import { ClearMessagesUseCase } from "./domain/use-case/clear.messages.use.case"
         }
         ]
 })
-export class MessagesFeatureModule { }
+export class ClearMessagesFeatureModule { }
