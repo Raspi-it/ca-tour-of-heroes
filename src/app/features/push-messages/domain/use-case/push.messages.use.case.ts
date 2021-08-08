@@ -10,6 +10,6 @@ export class PushMessagesUseCase extends AbstractPushMessagesUseCase {
     }
 
     async execute(param): Promise<void | AbstractCustomError> {
-        await this.repository.pushMessages(param);
+        return this.repository.pushMessages(param);
     }
 }

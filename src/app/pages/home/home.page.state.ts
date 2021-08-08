@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { from } from "rxjs";
 import { tap } from "rxjs/operators";
-import { AbstractCustomError } from "src/app/core/errors";
+import { AbstractCustomError, ServerError } from "src/app/core/errors";
 import { AbstractClearMessagesUseCase } from "src/app/features/clear-messages/domain/use-case/abstract.clear.messages.use.case";
 import { AbstractGetMessagesUseCase } from "src/app/features/get-messages/domain/use-case/abstract.get.messages.use.case";
 import { AbstractPushMessagesUseCase } from "src/app/features/push-messages/domain/use-case/abstract.push.messages.use.case";
@@ -44,12 +44,14 @@ export class HomePageState {
 
     @Action(PushMessageAction)
     async pushMessage({ dispatch }: StateContext<HomePageStateModel>, { payload }: PushMessageAction) {
-        const res = await this.pushMessagesUseCase.execute(payload);
-        if (res instanceof AbstractCustomError) {
-            console.log(res);
-        } else {
+        try {
+            this.pushMessagesUseCase.execute(payload);
             dispatch(new GetMessageAction());
+            return [];
+        } catch (error) {
+            return new ServerError(error?.error?.message);
         }
+
     }
 
     @Action(GetMessageAction)
