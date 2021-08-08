@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { AbstractCustomError } from "src/app/core/errors";
 import { AbstractMessagesRepository } from "../../data/repository/abstract.messages.repository";
 import { AbstractPushMessagesUseCase } from "./abstract.push.messages.use.case";
 
@@ -8,8 +9,7 @@ export class PushMessagesUseCase extends AbstractPushMessagesUseCase {
         super();
     }
 
-    async execute(param): Promise<string[]> {
-        console.log("this far: PushMessagesUseCase");
-        return this.repository.pushMessages(param);
+    async execute(param): Promise<void | AbstractCustomError> {
+        await this.repository.pushMessages(param);
     }
 }

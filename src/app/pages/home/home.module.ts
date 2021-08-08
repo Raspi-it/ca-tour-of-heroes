@@ -2,6 +2,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { NgxsModule } from "@ngxs/store";
+import { AppStore } from "src/app/app.store";
 import { ClearMessagesFeatureModule } from "src/app/features/clear-messages/clear.messages.feature.module";
 import { GetMessagesFeatureModule } from "src/app/features/get-messages/get.messages.feature.module";
 import { PushMessagesFeatureModule } from "src/app/features/push-messages/push.messages.feature.module";
@@ -16,31 +17,40 @@ import { HomePageState } from "./home.page.state";
 @NgModule({
     imports: [
         CommonModule,
+
+        // Use Cases / Features
         PushMessagesFeatureModule,
         GetMessagesFeatureModule,
         ClearMessagesFeatureModule,
 
+
+        // Pages
         DashboardModule,
         DetailModule,
         HeroesModule,
 
-        NgxsModule.forFeature([
-            HomePageState
-        ]),
-        // RouterModule.forChild([
-        //     {
-        //         path: 'dashboard',
-        //         loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule)
-        //     },
-        //     {
-        //         path: 'detail',
-        //         loadChildren: () => import('../detail/detail.module').then(m => m.DetailModule)
-        //     },
-        //     {
-        //         path: 'heroes',
-        //         loadChildren: () => import('../heroes/heroes.module').then(m => m.HeroesModule)
-        //     },
-        // ])
+
+        // States
+        NgxsModule.forFeature([HomePageState, AppStore]),
+
+        RouterModule.forChild([
+            {
+                path: '',
+                component: HomePage
+            },
+            {
+                 path: 'dashboard',
+                 loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule)
+            },
+            {
+                 path: 'detail',
+                 loadChildren: () => import('../detail/detail.module').then(m => m.DetailModule)
+            },
+            {
+                 path: 'heroes',
+                 loadChildren: () => import('../heroes/heroes.module').then(m => m.HeroesModule)
+            }
+        ])
     ],
     declarations: [
         //Components

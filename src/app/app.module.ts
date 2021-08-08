@@ -35,7 +35,7 @@ import { AppStore } from './app.store';
     NgxsLoggerPluginModule.forRoot(),
     RouterModule.forRoot([
       {
-        path: 'home',
+        path: '',
         loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
       },
       {

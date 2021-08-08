@@ -9,6 +9,7 @@ export class GetMessagesUseCase extends AbstractGetMessagesUseCase {
     }
 
     async execute(): Promise<string[]> {
+        console.log('GetMessagesUseCase');
         return this.repository.getMessages();
     }
 }

@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Action, Selector, State, StateContext } from "@ngxs/store";
 import { from } from "rxjs";
 import { tap } from "rxjs/operators";
+import { AbstractCustomError } from "src/app/core/errors";
 import { AbstractClearMessagesUseCase } from "src/app/features/clear-messages/domain/use-case/abstract.clear.messages.use.case";
 import { AbstractGetMessagesUseCase } from "src/app/features/get-messages/domain/use-case/abstract.get.messages.use.case";
 import { AbstractPushMessagesUseCase } from "src/app/features/push-messages/domain/use-case/abstract.push.messages.use.case";
@@ -42,26 +43,25 @@ export class HomePageState {
     ) { }
 
     @Action(PushMessageAction)
-        pushMessage({ patchState }: StateContext<HomePageStateModel>, { payload }: PushMessageAction) {
-            return from(this.pushMessagesUseCase.execute(payload)).pipe(
-                tap(res => {
-                    patchState({
-                        messages: res
-                    })
-                })
-            )
+    async pushMessage({ dispatch }: StateContext<HomePageStateModel>, { payload }: PushMessageAction) {
+        const res = await this.pushMessagesUseCase.execute(payload);
+        if (res instanceof AbstractCustomError) {
+            console.log(res);
+        } else {
+            dispatch(new GetMessageAction());
         }
+    }
 
     @Action(GetMessageAction)
-        getMessage({ patchState }: StateContext<HomePageStateModel>) {
-            return from(this.getMessagesUseCase.execute()).pipe(
-                tap(res => {
-                    patchState({
-                        messages: res
-                    })
+    getMessage({ patchState }: StateContext<HomePageStateModel>) {
+        return from(this.getMessagesUseCase.execute()).pipe(
+            tap(res => {
+                patchState({
+                    messages: res
                 })
-            )
-        }
+            })
+        )
+    }
 
     @Action(ClearMessageAction)
     clearMessage({ patchState }: StateContext<HomePageStateModel>) {

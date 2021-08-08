@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { AbstractCustomError, ServerError } from "src/app/core/errors";
 import { AbstractMessagesDataSource } from "../data-source/abstract.messages.data.source";
 import { AbstractMessagesRepository } from "./abstract.messages.repository";
 @Injectable()
@@ -7,13 +8,12 @@ export class MessagesRepository extends AbstractMessagesRepository {
         super();
     }
 
-    async pushMessages(param): Promise<string[]> {
+    async pushMessages(param): Promise<void | AbstractCustomError> {
         try {
-            const raw = await this.dataSource.pushMessages(param);
-            console.log(raw);
-            return raw;
+            await this.dataSource.pushMessages(param);
         } catch (error) {
             console.error(error);
-        } return [];
+            return new ServerError(error?.error?.message);
+        }
     }
 }
