@@ -10,7 +10,7 @@ export class MessagesDataSource extends AbstractMessagesDataSource {
         super();
     }
 
-    async pushMessages(param): Promise<void | AbstractCustomError> {
-        await this.http.post('http://localhost:8080/api/messages/add', {msg: param}).pipe().toPromise();
+    async pushMessages(param): Promise<void | string | AbstractCustomError> {
+        return await this.http.post<any>('http://localhost:8080/api/messages/add', {msg: param}).pipe().toPromise();
     }
 }

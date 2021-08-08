@@ -9,12 +9,10 @@ export class AddHeroRepository extends AbstractAddHeroRepository {
         super();
     }
 
-    async addHero(param): Promise<HeroEntity[] | AbstractCustomError> {
+    async addHero(param): Promise<HeroEntity[] | AbstractCustomError | void> {
         try {
             if (!!(param && param.id)) {
-            const raw = await this.dataSource.addHero(param);
-            console.log(raw);
-            return HeroEntity[0].fromModel(raw);
+            await this.dataSource.addHero(param);
             } else {
                 throw new ServerError('missing param');
             }

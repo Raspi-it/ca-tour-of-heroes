@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { Store } from '@ngxs/store';
 import { HeroEntity } from 'src/app/core/domain/entity/hero.entity';
 
 @Component({
@@ -12,7 +11,7 @@ export class TopHeroListComponent implements OnInit, OnChanges {
     @Input() heroes: HeroEntity[];
     @Output() changePageEventHeroList = new EventEmitter();
 
-    constructor(private readonly store: Store) {
+    constructor() {
     }
 
     ngOnInit(): void {}

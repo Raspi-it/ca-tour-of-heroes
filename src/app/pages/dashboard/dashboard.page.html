@@ -1,5 +1,5 @@
 <div *ngIf="load === 'dashboard'">
     <h2>Top Heroes</h2>
-    <app-top-hero-list [heroes]="heroes$ | async" (changePageEventHeroList)="changePage($event)"></app-top-hero-list>
+    <app-top-hero-list [heroes]="heroes$ | async" (changePageEventHeroList)="changePage($event)"></app-top-hero-list><!-- $ | async -->
     <app-hero-search [heroes]="heroes$ | async" (changePageEventHeroSearch)="changePage($event)"></app-hero-search>
 </div>

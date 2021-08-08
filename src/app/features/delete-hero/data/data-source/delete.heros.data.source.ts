@@ -12,8 +12,8 @@ export class DeleteHeroDataSource extends AbstractDeleteHeroDataSource {
     }
 
     // Link hinzufügen und testen
-    async deleteHero(param): Promise<HeroModel> {
-        return this.http.request<HeroModel>('delete','http://localhost:8080/api/hero/delete/', {
+    async deleteHero(param): Promise<HeroModel | void> {
+        return this.http.post<HeroModel>('http://localhost:8080/api/hero/delete/', {
             body: param,
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

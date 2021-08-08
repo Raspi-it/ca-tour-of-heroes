@@ -13,8 +13,14 @@ export class UpdateHeroAction {
     constructor(public readonly payload) { }
 }
 
+export class SetHeroAction {
+    static readonly type = '[DATA] set temporary hero for detail page';
+    constructor(public readonly payload: HeroEntity) {}
+}
+
 export interface DetailPageStateModel {
     updateHero?: HeroEntity;
+    hero?: HeroEntity;
 }
 
 @State<DetailPageStateModel>({
@@ -28,9 +34,21 @@ export class DetailPageState {
         return updateHero;
     }
 
+    @Selector()
+    static hero({ hero }: DetailPageStateModel) {
+        return hero;
+    }
+
     constructor(
         private readonly updateHeroUseCase: AbstractUpdateHeroUseCase
         ){ }
+
+    @Action(SetHeroAction)
+    setHeroAction({ patchState }: StateContext<DetailPageStateModel>, { payload }: SetHeroAction) {
+        return patchState({
+            hero: payload
+        })
+    }
 
     @Action(UpdateHeroAction)
     saveHero({ setState, dispatch }: StateContext<DetailPageStateModel>, { payload }: UpdateHeroAction) {

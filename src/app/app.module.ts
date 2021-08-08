@@ -15,6 +15,7 @@ import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 import { AppStore } from './app.store';
+import { DataFeatureModule } from './features/data/data.feature.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,8 @@ import { AppStore } from './app.store';
     FormsModule,
     HttpClientModule,
     CoreModule,
+
+    DataFeatureModule,
 
     NgxsModule.forRoot([AppStore], {developmentMode: !environment.production}),
     NgxsReduxDevtoolsPluginModule.forRoot(),

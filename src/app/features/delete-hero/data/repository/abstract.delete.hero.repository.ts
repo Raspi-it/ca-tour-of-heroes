@@ -3,5 +3,5 @@ import { HeroEntity } from "src/app/core/domain/entity/hero.entity";
 import { AbstractCustomError } from "src/app/core/errors";
 
 export abstract class AbstractDeleteHeroRepository extends AbstractRepository {
-    abstract deleteHero(param): Promise<HeroEntity | AbstractCustomError>;
+    abstract deleteHero(param): Promise<HeroEntity | AbstractCustomError | void>;
 }

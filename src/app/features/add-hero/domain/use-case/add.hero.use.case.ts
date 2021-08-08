@@ -10,7 +10,7 @@ export class AddHeroUseCase extends AbstractAddHeroUseCase {
         super();
     }
 
-    async execute(param): Promise<HeroEntity[] | AbstractCustomError> {
+    async execute(param): Promise<HeroEntity[] | AbstractCustomError | void> {
         return this.repository.addHero(param);
     }
 }

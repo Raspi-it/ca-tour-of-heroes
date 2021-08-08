@@ -10,7 +10,7 @@ export class DeleteHeroUseCase extends AbstractDeleteHeroUseCase {
         super();
     }
 
-    async execute(param): Promise<HeroEntity | AbstractCustomError> {
+    async execute(param): Promise<HeroEntity | AbstractCustomError | void> {
         console.log('usecase');
         return this.repository.deleteHero(param);
     }
