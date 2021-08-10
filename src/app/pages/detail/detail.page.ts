@@ -25,9 +25,7 @@ export class DetailPage implements OnInit {
 
     async save() {
         if(this.hero) {
-            //this.hero.name = this.hero_input; 
-            //hier wird aktuell nur der "alte" Hero übergeben
-            await this.store.dispatch(new UpdateHeroAction([this.hero, this.hero_input])).toPromise();
+            await this.store.dispatch(new UpdateHeroAction([this.hero.id, this.hero_input])).toPromise();
             this.goBack();
         }
     }

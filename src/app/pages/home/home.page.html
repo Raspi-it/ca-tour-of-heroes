@@ -1,8 +1,8 @@
 <app-header-navigation (PushMessageEventNavigation)="pushMessage($event)" (changePageEventNavigation)="changePage($event)"></app-header-navigation>
 
-<app-dashboard [load]="visibility$ | async" (GetHeroesDashboardEvent)="getHeroes()" (ChangePageDashboardEvent)="changePage($event)" (PushMessageDashboardEvent)="pushMessage($event)"></app-dashboard>
+<app-dashboard [load]="visibility$ | async" (ChangePageDashboardEvent)="changePage($event)" (PushMessageDashboardEvent)="pushMessage($event)"></app-dashboard>
 
-<app-heroes [load]="visibility$ | async" (GetHeroesHeroesEvent)="getHeroes()"></app-heroes>
+<app-heroes [load]="visibility$ | async" ></app-heroes>
 
 <app-detail [load]="visibility$ | async" [hero]="hero$ | async"></app-detail>
 

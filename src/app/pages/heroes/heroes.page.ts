@@ -32,7 +32,7 @@ export class HeroesPage implements OnInit, OnChanges {
     }
 
     ngOnChanges() {
-
+        
      }
 
     async changePage(load, hero, msg) {

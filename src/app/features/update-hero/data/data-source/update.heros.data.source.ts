@@ -7,7 +7,7 @@ import { AbstractUpdateHeroDataSource } from "./abstract.update.hero.data.source
 @Injectable()
 export class UpdateHeroDataSource extends AbstractUpdateHeroDataSource {
     
-    hero: HeroModel;
+    heroId: number;
     new_name: string;
 
     constructor(private readonly http: HttpClient){
@@ -15,11 +15,8 @@ export class UpdateHeroDataSource extends AbstractUpdateHeroDataSource {
     }
 
     // Link hinzufügen und testen
-    async updateHero(params): Promise<HeroModel> {
-        this.hero = params[0];
-        this.new_name = params[1];
+    async updateHero(params): Promise<HeroModel | void> {
 
-        return this.http.request<HeroModel>('update','http://localhost:8080/api/hero/update/'+this.hero.id,{body: {params}}).toPromise();
-
+        return this.http.put<any>('http://localhost:8080/api/hero/update',params).pipe().toPromise();
     }
 }

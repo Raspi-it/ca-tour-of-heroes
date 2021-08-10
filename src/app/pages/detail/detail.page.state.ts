@@ -51,21 +51,15 @@ export class DetailPageState {
     }
 
     @Action(UpdateHeroAction)
-    saveHero({ setState, dispatch }: StateContext<DetailPageStateModel>, { payload }: UpdateHeroAction) {
+    saveHero({ dispatch }: StateContext<DetailPageStateModel>, { payload }: UpdateHeroAction) {
          return from(this.updateHeroUseCase.execute(payload)).pipe(
              tap(res => {
                  if(res instanceof AbstractCustomError) {
                     console.log(res.message);
-                 } else {
-                     setState(
-                         patch<DetailPageStateModel>({
-                            updateHero: res
-                         })
-                     );
-                    }
+                 } 
                     }
                 ),
-            finalize(() => dispatch(new PushMessageAction(`updated hero id=${DetailPageState.updateHero}`)))
+            finalize(() => dispatch(new PushMessageAction(`updated hero id=`+payload[0])))
              );
     }
 }

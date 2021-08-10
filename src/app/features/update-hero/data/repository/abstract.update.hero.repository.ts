@@ -3,5 +3,5 @@ import { HeroEntity } from "src/app/core/domain/entity/hero.entity";
 import { AbstractCustomError } from "src/app/core/errors";
 
 export abstract class AbstractUpdateHeroRepository extends AbstractRepository {
-    abstract updateHero(param): Promise<HeroEntity | AbstractCustomError>;
+    abstract updateHero(param): Promise<HeroEntity | AbstractCustomError | void>;
 }
