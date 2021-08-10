@@ -29,7 +29,7 @@ export class DashboardPage implements OnInit {
     ngOnInit() { }
         
     async getHeroes() {
-        this.store.dispatch(new GetHeroesAction()).toPromise();
+        await this.store.dispatch(new GetHeroesAction()).toPromise();
     }
 
     async changePage($event) {

@@ -66,12 +66,7 @@ export class HomePageState {
 
     @Action(PushMessageAction)
     async pushMessage({ dispatch }: StateContext<HomePageStateModel>, { payload }: PushMessageAction) {
-        // try{ 
-            this.pushMessagesUseCase.execute(payload);
-        // } catch (error) {
-        //    console.log(error.message);
-        //}
-        // finalize(() => dispatch(new GetMessageAction()));
+        this.pushMessagesUseCase.execute(payload);
         dispatch(new GetMessageAction())
     }
 

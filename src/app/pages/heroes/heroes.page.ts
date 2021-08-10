@@ -16,8 +16,8 @@ export class HeroesPage implements OnInit, OnChanges {
     @Input() heroes: HeroEntity[];
     @Input() load: string;
 
-    @Output() ChangePageDashboardEvent = new EventEmitter();
-    @Output() PushMessageDashboardEvent = new EventEmitter();
+    @Output() ChangePageHeroesEvent = new EventEmitter();
+    @Output() PushMessageHeroesEvent = new EventEmitter();
 
     id: number;
     hero: HeroEntity;
@@ -25,21 +25,22 @@ export class HeroesPage implements OnInit, OnChanges {
 
     constructor(
         private readonly store: Store
-    ) { }
-
-    ngOnInit() {
+    ) { 
         this.getHeroes();
     }
 
-    ngOnChanges() {
+    ngOnInit() {
         
+    }
+
+    ngOnChanges() {
+
      }
 
     async changePage(load, hero, msg) {
-        this.ChangePageDashboardEvent.emit({load: load});
-        this.PushMessageDashboardEvent.emit({msg: msg});
-
         await this.store.dispatch(new SetHeroAction(hero)).toPromise();
+        this.ChangePageHeroesEvent.emit({load: load});
+        this.PushMessageHeroesEvent.emit({msg: msg});
     }
 
     async getHeroes() {
@@ -53,7 +54,6 @@ export class HeroesPage implements OnInit, OnChanges {
         this.id = this.heroes.length > 0 ? Math.max(...this.heroes.map(hero => hero.id)) + 1 : 11;
         this.hero = new HeroModel({id: this.id, name: new_name});
         await this.store.dispatch(new AddHeroAction(this.hero)).toPromise();
-        console.log('Bis HIER kommt er auf alle Fälle!');
         //this.GetHeroesHeroesEvent.emit();
         this.store.dispatch(new GetHeroesAction()).toPromise();
     }

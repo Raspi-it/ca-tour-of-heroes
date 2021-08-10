@@ -1,10 +1,10 @@
 import { Component, Injectable, OnChanges, OnInit } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
-import { AppStore, ChangeVisibilityAction } from "src/app/app.store";
+import { AppStore, ChangeVisibilityAction, GetHeroesAction } from "src/app/app.store";
 import { HeroEntity } from "src/app/core/domain/entity/hero.entity";
 import { DetailPageState } from "../detail/detail.page.state";
-import { ClearMessageAction, GetHeroesAction, GetMessageAction, HomePageState, PushMessageAction } from "./home.page.state";
+import { ClearMessageAction, GetMessageAction, HomePageState, PushMessageAction } from "./home.page.state";
 
 @Component({
     selector: 'app-home',
@@ -21,9 +21,16 @@ export class HomePage implements OnInit, OnChanges{
 
     title: string = 'Tour of Heores';
 
-    constructor(private readonly store: Store) { }
+    constructor(private readonly store: Store) { 
+        //this.getHeroes();
+     }
 
     ngOnInit() {
+
+    }
+
+    ngOnChanges() {
+        
     }
 
     async changePage($event) {
@@ -40,10 +47,6 @@ export class HomePage implements OnInit, OnChanges{
     }
 
     async getHeroes() {
-        this.store.dispatch(new GetHeroesAction()).toPromise();
-    }
-
-    ngOnChanges() {
-        
+        await this.store.dispatch(new GetHeroesAction()).toPromise();
     }
 }
