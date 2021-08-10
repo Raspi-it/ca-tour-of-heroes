@@ -19,7 +19,6 @@ export class DashboardPage implements OnInit {
 
     @Output() ChangePageDashboardEvent = new EventEmitter();
     @Output() PushMessageDashboardEvent = new EventEmitter();
-    // @Output() GetHeroesDashboardEvent = new EventEmitter();
 
     constructor(
         private readonly store: Store
@@ -30,8 +29,7 @@ export class DashboardPage implements OnInit {
     ngOnInit() { }
         
     async getHeroes() {
-        this.store.dispatch(new GetHeroesAction()).toPromise();  
-        // this.GetHeroesDashboardEvent.emit();
+        this.store.dispatch(new GetHeroesAction()).toPromise();
     }
 
     async changePage($event) {

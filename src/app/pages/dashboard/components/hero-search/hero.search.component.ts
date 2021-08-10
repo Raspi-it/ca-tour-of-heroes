@@ -31,27 +31,29 @@ export class HeroSearchComponent implements OnInit {
     }
 
     async ngOnInit() { 
-      //  var heroes = await this.store.dispatch(new GetHeroesAction()).toPromise();
-      //  heroes = this.searchTerms.pipe(
-      //    // wait 300ms after each keystroke before considering the term
-      //    debounceTime(300),
-      //    // ignore new term if same as previous term
-      //    distinctUntilChanged(),
-      //    // switch to new search observable each time the term changes
-      //    switchMap((term: string) => this.searchHeroes(term)),
-      //  );
+      // var heroes = await this.store.dispatch(new GetHeroesAction()).toPromise();
+      // heroes = this.searchTerms.pipe(
+      //   // wait 300ms after each keystroke before considering the term
+      //   debounceTime(300),
+      //   // ignore new term if same as previous term
+      //   distinctUntilChanged(),
+      //   // switch to new search observable each time the term changes
+      //   switchMap((term: string) => this.searchHeroes(term)),
+      // );
     }
 
-    async searchHeroes(term: string): Promise<Observable<HeroEntity[]>> {
-      if (!term.trim()) {
-        // if not search term, return empty hero array.
-        return of([]);
-      }
-      return this.http.get<HeroEntity[]>(`http://localhost:8080/api/hero/search/${term}`).pipe(
-        tap(x => x.length ?
-            this.store.dispatch(new PushMessageAction(`found heroes matching "${term}"`)) :
-            this.store.dispatch(new PushMessageAction(`no heroes matching "${term}"`))
-      ));
+    async searchHeroes(term: string): Promise<Observable<HeroEntity[]> | void> {
+      // needs own use Case
+      
+      // if (!term.trim()) {
+      //   // if not search term, return empty hero array.
+      //   return of([]);
+      // }
+      // return this.http.get<HeroEntity[]>(`http://localhost:8080/api/hero/search/${term}`).pipe(
+      //   tap(x => x.length ?
+      //       this.store.dispatch(new PushMessageAction(`found heroes matching "${term}"`)) :
+      //       this.store.dispatch(new PushMessageAction(`no heroes matching "${term}"`))
+      // ));
     }
 
       async changePage(load, hero) {
