@@ -8,9 +8,9 @@ export class MessagesRepository extends AbstractMessagesRepository {
         super();
     }
 
-    async pushMessages(param): Promise<void | string | AbstractCustomError> {
+    async pushMessages(param): Promise<void | AbstractCustomError> {
         try {
-            return this.dataSource.pushMessages(param);
+            this.dataSource.pushMessages(param);
         } catch (error) {
             console.error(error);
             return new ServerError(error?.error?.message);

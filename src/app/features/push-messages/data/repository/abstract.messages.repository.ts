@@ -2,5 +2,5 @@ import { AbstractRepository } from "src/app/core/data/repository/abstract.reposi
 import { AbstractCustomError } from "src/app/core/errors";
 
 export abstract class AbstractMessagesRepository extends AbstractRepository {
-    abstract pushMessages(param): Promise<void | string | AbstractCustomError>;
+    abstract pushMessages(param): Promise<void | AbstractCustomError>;
 }

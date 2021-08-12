@@ -4,15 +4,10 @@ import { from } from "rxjs";
 import { finalize, tap } from "rxjs/operators";
 import { HeroEntity } from "./core/domain/entity/hero.entity";
 import { AbstractDataUseCase } from "./features/data/domain/use-case/abstract.data.use.case";
-import { PushMessageAction } from "./pages/home/home.page.state";
+import { PushMessageAction } from "./pages/components/messages/messages.component.state";
 
-export class ChangeVisibilityAction {
-    static readonly type = '[VISIBILITY] viewstate of components';
-    constructor(public readonly payload: string) {}
-}
-
-export class GetHeroesAction {
-    static readonly type = '[DATA] load all heroes';
+export class AppGetHeroesAction {
+    static readonly type = '[APP] load all heroes';
 }
 
 export interface AppStateModel {
@@ -21,19 +16,11 @@ export interface AppStateModel {
 }
 
 @State<AppStateModel>({
-    name: 'app',
-    defaults: {
-        visibility: 'dashboard'
-    }
+    name: 'app'
 })
 
 @Injectable()
 export class AppStore {
-
-    @Selector()
-    static visibility({ visibility }: AppStateModel) {
-        return visibility;
-    }
 
     @Selector()
     static heroes({ heroes }: AppStateModel) {
@@ -44,14 +31,7 @@ export class AppStore {
         private readonly dataUseCase: AbstractDataUseCase
     ) {}
 
-    @Action(ChangeVisibilityAction)
-    changeVisibility({ patchState }: StateContext<AppStateModel>, { payload }: ChangeVisibilityAction) {
-        return patchState({
-                        visibility: payload
-                    });
-    }
-
-    @Action(GetHeroesAction)
+    @Action(AppGetHeroesAction)
     getHeroes({ patchState, dispatch }: StateContext<AppStateModel>) {
         return from(this.dataUseCase.execute()).pipe(
             tap(res => {

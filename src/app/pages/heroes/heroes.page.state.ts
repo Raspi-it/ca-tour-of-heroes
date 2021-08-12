@@ -7,24 +7,19 @@ import { AbstractCustomError } from "src/app/core/errors";
 import { AbstractAddHeroUseCase } from "src/app/features/add-hero/domain/use-case/abstract.add.hero.use.case";
 import { AbstractDataUseCase } from "src/app/features/data/domain/use-case/abstract.data.use.case";
 import { AbstractDeleteHeroUseCase } from "src/app/features/delete-hero/domain/use-case/abstract.delete.hero.use.case";
-import { PushMessageAction } from "../home/home.page.state";
+import { PushMessageAction } from "../components/messages/messages.component.state";
 
-export class AddHeroAction{
-    static readonly type = '[DATA] add hero'
+export class HeroesAddHeroAction{
+    static readonly type = '[HEROES] add hero'
     constructor(public readonly payload: HeroEntity) { }
 }
 
-export class DeleteHeroAction{
-    static readonly type = '[DATA] delete hero'
+export class HeroesDeleteHeroAction{
+    static readonly type = '[HEROES] delete hero'
     constructor(public readonly payload: HeroEntity) { }
 }
 
-export class GetHeroesAction {
-    static readonly type = '[DATA] load all heroes';
-}
-
-export interface HeroesPageStateModel { 
-    heroes?: HeroEntity[];
+export interface HeroesPageStateModel {
 }
 
 @State<HeroesPageStateModel>({
@@ -34,46 +29,28 @@ export interface HeroesPageStateModel {
 @Injectable()
 export class HeroesPageState {
 
-    @Selector()
-    static heroes({ heroes }: HeroesPageStateModel) {
-        return heroes;
-    }
-
     constructor(
         private readonly deleteHeroUseCase: AbstractDeleteHeroUseCase,
-        private readonly addHeroUseCase: AbstractAddHeroUseCase,
-        private readonly dataUseCase: AbstractDataUseCase
+        private readonly addHeroUseCase: AbstractAddHeroUseCase
         ){ }
 
-    @Action(DeleteHeroAction)
-    deleteHero({ dispatch }: StateContext<HeroesPageStateModel>, { payload }: DeleteHeroAction) {
-        return from(this.deleteHeroUseCase.execute(payload)).pipe(
-            finalize(() => dispatch(new PushMessageAction(`deleted hero id=`+payload.id)))
-            );
+    @Action(HeroesDeleteHeroAction)
+    async deleteHero({ dispatch }: StateContext<HeroesPageStateModel>, { payload }: HeroesDeleteHeroAction) {
+        const res = await this.deleteHeroUseCase.execute(payload);
+        if (res instanceof AbstractCustomError) {
+            console.log('Delete Hero failed!');
+        } else {
+            dispatch(new PushMessageAction(`deleted hero id=`+payload.id));
+        }
     }
     
-    @Action(AddHeroAction)
-    addHero({ dispatch }: StateContext<HeroesPageStateModel>, { payload }: AddHeroAction) {
-        return from(this.addHeroUseCase.execute(payload)).pipe(
-            tap(res => {
+    @Action(HeroesAddHeroAction)
+    async addHero({ dispatch }: StateContext<HeroesPageStateModel>, { payload }: HeroesAddHeroAction) {
+        const res = await this.addHeroUseCase.execute(payload)
             if(res instanceof AbstractCustomError) {
                 console.log(res.message);
-                }
+            } else {
+                dispatch(new PushMessageAction(`added hero w/ id=`+payload.id));
             }
-        ),
-        finalize(() => dispatch(new PushMessageAction(`added hero w/ id=`+payload.id)))
-            );
-    }
-
-    @Action(GetHeroesAction)
-    getHeroes({ patchState, dispatch }: StateContext<HeroesPageStateModel>) {
-        return from(this.dataUseCase.execute()).pipe(
-            tap(res => {
-                    patchState({
-                        heroes: res
-                    });
-                    }
-                ),
-            finalize(() => dispatch(new PushMessageAction('fetched heroes'))));
     }
 }

@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { HeroEntity } from "src/app/core/domain/entity/hero.entity";
-import { UpdateHeroAction } from "./detail.page.state";
-import { Store } from "@ngxs/store";
-import { ChangeVisibilityAction } from "src/app/app.store";
+import { DetailUpdateHeroAction, DetailGetHeroByIdAction, DetailPageState } from "./detail.page.state";
+import { Select, Store } from "@ngxs/store";
+import { ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs";
 
 @Component({
     selector: 'app-detail',
@@ -11,26 +12,25 @@ import { ChangeVisibilityAction } from "src/app/app.store";
 })
 export class DetailPage implements OnInit {
 
-    @Input() load: string;
-    @Input() hero: HeroEntity;
+    @Select(DetailPageState.hero) hero$: Observable<HeroEntity>;
 
     hero_input: string;
 
     constructor(
+        private route: ActivatedRoute,
         private store: Store
     ) { }
 
-    ngOnInit(){
+    async ngOnInit(){
+        this.getHero();
     }
 
-    async save() {
-        if(this.hero) {
-            await this.store.dispatch(new UpdateHeroAction([this.hero.id, this.hero_input])).toPromise();
-            this.goBack();
-        }
+    async getHero() {
+        const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+        await this.store.dispatch(new DetailGetHeroByIdAction(id)).toPromise();
     }
 
-    async goBack() {
-        await this.store.dispatch(new ChangeVisibilityAction('dashboard')).toPromise();
+    async save(hero) {
+        await this.store.dispatch(new DetailUpdateHeroAction([hero.id, this.hero_input])).toPromise();
     }
 }

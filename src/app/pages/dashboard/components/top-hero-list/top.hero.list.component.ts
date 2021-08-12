@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { HeroEntity } from 'src/app/core/domain/entity/hero.entity';
 
 @Component({
@@ -6,18 +6,11 @@ import { HeroEntity } from 'src/app/core/domain/entity/hero.entity';
   templateUrl: './top.hero.list.component.html',
   styleUrls: [ '../../dashboard.page.css' ] //../../dashboard.page.css
 })
-export class TopHeroListComponent implements OnInit, OnChanges {
+export class TopHeroListComponent implements OnChanges {
 
     @Input() heroes: HeroEntity[];
-    @Output() changePageEventHeroList = new EventEmitter();
 
     constructor() {
-    }
-
-    ngOnInit(): void {}
-
-    async changePage(load, hero) {
-      this.changePageEventHeroList.emit({load: load, hero: hero});
     }
 
     ngOnChanges() {

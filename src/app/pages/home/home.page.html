@@ -1,9 +1,0 @@
-<app-header-navigation (PushMessageEventNavigation)="pushMessage($event)" (changePageEventNavigation)="changePage($event)"></app-header-navigation>
-
-<app-dashboard [heroes]="heroes$ | async" [load]="visibility$ | async" (ChangePageDashboardEvent)="changePage($event)" (PushMessageDashboardEvent)="pushMessage($event)"></app-dashboard>
-
-<app-heroes [heroes]="heroes$ | async" [load]="visibility$ | async" (ChangePageHeroesEvent)="changePage($event)" (PushMessageHeroesEvent)="pushMessage($event)"></app-heroes>
-
-<app-detail [load]="visibility$ | async" [hero]="hero$ | async"></app-detail>
-
-<app-footer-messages (clearMessageEvent)="clearMessage()" [messages]="messages$ | async"></app-footer-messages>

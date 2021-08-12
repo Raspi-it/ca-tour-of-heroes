@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { NgxsModule } from "@ngxs/store";
+import { AppRoutingModule } from "src/app/app-routing.module";
 import { AppStore } from "src/app/app.store";
 import { AddHeroFeatureModule } from "src/app/features/add-hero/add.hero.feature.module";
 import { DataFeatureModule } from "src/app/features/data/data.feature.module";
@@ -15,6 +16,8 @@ import { HeroesPageState } from "./heroes.page.state";
              AppStore
         ]),
         CommonModule,
+
+        AppRoutingModule,
 
         DeleteHeroFeatureModule,
         AddHeroFeatureModule,

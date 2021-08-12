@@ -1,7 +1,5 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map } from "rxjs/operators";
-import { HeroModel } from "src/app/core/data/models/hero.model";
 import { AbstractDeleteHeroDataSource } from "./abstract.delete.hero.data.source";
 
 @Injectable()
@@ -12,8 +10,8 @@ export class DeleteHeroDataSource extends AbstractDeleteHeroDataSource {
     }
 
     // Link hinzufügen und testen
-    async deleteHero(param): Promise<HeroModel | void> {
-        return this.http.post<HeroModel>('http://localhost:8080/api/hero/delete/', {
+    async deleteHero(param): Promise<void> {
+        return this.http.post<any>('http://localhost:8080/api/hero/delete/', {
             body: param,
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',

@@ -1,66 +1,45 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
-import { Store } from '@ngxs/store';
-import { GetHeroesAction } from 'src/app/app.store';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { AppGetHeroesAction, AppStore } from 'src/app/app.store';
 import { HeroModel } from 'src/app/core/data/models/hero.model';
 import { HeroEntity } from 'src/app/core/domain/entity/hero.entity';
-import { SetHeroAction } from '../detail/detail.page.state';
-import { AddHeroAction, DeleteHeroAction } from './heroes.page.state';
+import { HeroesAddHeroAction, HeroesDeleteHeroAction } from './heroes.page.state';
 
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.page.html',
   styleUrls: ['./heroes.page.css']
 })
-export class HeroesPage implements OnInit, OnChanges {
-  
-    @Input() heroes: HeroEntity[];
-    @Input() load: string;
+export class HeroesPage implements OnInit {
 
-    @Output() ChangePageHeroesEvent = new EventEmitter();
-    @Output() PushMessageHeroesEvent = new EventEmitter();
+    //@Select(AppStore.heroes) heroes$: Observable<HeroEntity[]>;
 
     id: number;
     hero: HeroEntity;
-    Allheroes: HeroEntity[];
+    heroes: HeroEntity[];
 
     constructor(
         private readonly store: Store
-    ) { 
-        this.getHeroes();
+    ) {}
+
+    async ngOnInit() {
+        await this.store.dispatch(new AppGetHeroesAction()).toPromise();
+        this.heroes = this.store.selectSnapshot(AppStore.heroes);
     }
 
-    ngOnInit() {
-        
-    }
-
-    ngOnChanges() {
-
-     }
-
-    async changePage(load, hero, msg) {
-        await this.store.dispatch(new SetHeroAction(hero)).toPromise();
-        this.ChangePageHeroesEvent.emit({load: load});
-        this.PushMessageHeroesEvent.emit({msg: msg});
-    }
-
-    async getHeroes() {
-        this.store.dispatch(new GetHeroesAction()).toPromise();
-    }
-
-    async add(new_name: string) {        
-        new_name = new_name.trim();
-        if (!new_name) { return; }
+    async add(newName: string) {        
+        newName = newName.trim();
+        if (!newName) { return; }
 
         this.id = this.heroes.length > 0 ? Math.max(...this.heroes.map(hero => hero.id)) + 1 : 11;
-        this.hero = new HeroModel({id: this.id, name: new_name});
-        await this.store.dispatch(new AddHeroAction(this.hero)).toPromise();
-        //this.GetHeroesHeroesEvent.emit();
-        this.store.dispatch(new GetHeroesAction()).toPromise();
+        this.hero = new HeroModel({id: this.id, name: newName});
+        await this.store.dispatch(new HeroesAddHeroAction(this.hero)).toPromise();
+        await this.store.dispatch(new AppGetHeroesAction()).toPromise();
     }
 
     async delete(hero: HeroEntity) {
         this.heroes = this.heroes.filter(h => h !== hero);
-        await this.store.dispatch(new DeleteHeroAction(hero)).toPromise();
+        await this.store.dispatch(new HeroesDeleteHeroAction(hero)).toPromise();
     }
-
 }

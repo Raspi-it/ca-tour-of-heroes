@@ -9,12 +9,10 @@ export class DeleteHeroRepository extends AbstractDeleteHeroRepository {
         super();
     }
 
-    async deleteHero(param): Promise<HeroEntity | AbstractCustomError | void> {
+    async deleteHero(param): Promise<AbstractCustomError | void> {
         try {
             if (!!(param && param.id)) {
-            const raw = await this.dataSource.deleteHero(param);
-            console.log(raw);
-            return raw;
+                await this.dataSource.deleteHero(param);
             } else {
                 throw new ServerError('missing param');
             }

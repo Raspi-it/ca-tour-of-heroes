@@ -7,7 +7,8 @@ import {
 } from 'rxjs/operators';
 import { Store } from '@ngxs/store';
 import { HttpClient } from '@angular/common/http';
-import { GetHeroesAction, PushMessageAction } from 'src/app/pages/home/home.page.state';
+import { AppStore } from 'src/app/app.store';
+import { PushMessageAction } from 'src/app/pages/components/messages/messages.component.state';
 
 @Component({
   selector: 'app-hero-search',
@@ -16,9 +17,7 @@ import { GetHeroesAction, PushMessageAction } from 'src/app/pages/home/home.page
 })
 export class HeroSearchComponent implements OnInit {
 
-    @Input() heroes: HeroEntity[];
-    @Output() changePageEventHeroSearch = new EventEmitter();
-
+    heroes: HeroEntity[];
     private searchTerms = new Subject<string>();
 
     constructor(
@@ -26,25 +25,26 @@ export class HeroSearchComponent implements OnInit {
       private readonly http: HttpClient
     ) {}
 
+    // Push a search term into the observable stream.
     search(term: string): void {
-      this.searchTerms.next(term);
+    //   this.searchTerms.next(term);
     }
 
-    async ngOnInit() { 
-      // var heroes = await this.store.dispatch(new GetHeroesAction()).toPromise();
-      // heroes = this.searchTerms.pipe(
+    ngOnInit(): void {
+      // this.heroes = this.searchTerms.pipe(
       //   // wait 300ms after each keystroke before considering the term
       //   debounceTime(300),
+
       //   // ignore new term if same as previous term
       //   distinctUntilChanged(),
+
       //   // switch to new search observable each time the term changes
-      //   switchMap((term: string) => this.searchHeroes(term)),
+      //   switchMap((term: string) => this.heroService.searchHeroes(term)),
       // );
     }
 
     async searchHeroes(term: string): Promise<Observable<HeroEntity[]> | void> {
-      // needs own use Case
-      
+
       // if (!term.trim()) {
       //   // if not search term, return empty hero array.
       //   return of([]);
@@ -55,8 +55,4 @@ export class HeroSearchComponent implements OnInit {
       //       this.store.dispatch(new PushMessageAction(`no heroes matching "${term}"`))
       // ));
     }
-
-      async changePage(load, hero) {
-        this.changePageEventHeroSearch.emit({load: load, hero: hero});
-      }
 }

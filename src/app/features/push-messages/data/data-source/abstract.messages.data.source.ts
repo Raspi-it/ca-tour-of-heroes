@@ -2,5 +2,5 @@ import { AbstractDataSource } from "src/app/core/data/data-source/abstract.data.
 import { AbstractCustomError } from "src/app/core/errors";
 
 export abstract class AbstractMessagesDataSource extends AbstractDataSource {
-    abstract pushMessages(param): Promise<void | string | AbstractCustomError>;
+    abstract pushMessages(param): Promise<void | AbstractCustomError>;
 }

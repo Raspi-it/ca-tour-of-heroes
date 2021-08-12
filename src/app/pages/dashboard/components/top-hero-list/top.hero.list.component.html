@@ -1,5 +1,5 @@
 <div class="heroes-menu">
-    <a *ngFor="let hero of heroes" (click)="changePage('detail', hero)">
+    <a *ngFor="let hero of heroes" routerLink="/detail/{{hero.id}}">
         {{hero?.name}}
     </a>
 </div>
