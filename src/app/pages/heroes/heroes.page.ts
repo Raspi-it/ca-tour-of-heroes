@@ -24,6 +24,10 @@ export class HeroesPage implements OnInit {
     ) {}
 
     async ngOnInit() {
+        this.getHeroes();
+    }
+
+    async getHeroes() {
         await this.store.dispatch(new AppGetHeroesAction()).toPromise();
         this.heroes = this.store.selectSnapshot(AppStore.heroes);
     }
@@ -35,7 +39,8 @@ export class HeroesPage implements OnInit {
         this.id = this.heroes.length > 0 ? Math.max(...this.heroes.map(hero => hero.id)) + 1 : 11;
         this.hero = new HeroModel({id: this.id, name: newName});
         await this.store.dispatch(new HeroesAddHeroAction(this.hero)).toPromise();
-        await this.store.dispatch(new AppGetHeroesAction()).toPromise();
+        
+        this.getHeroes();
     }
 
     async delete(hero: HeroEntity) {

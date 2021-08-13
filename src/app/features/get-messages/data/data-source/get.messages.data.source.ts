@@ -10,8 +10,6 @@ export class GetMessagesDataSource extends AbstractGetMessagesDataSource {
     }
 
     async getMessages(): Promise<string[]> {
-        return this.http.get<any[]>('http://localhost:8080/api/messages/get').pipe(
-            
-        ).toPromise();
+        return this.http.get<any[]>('http://localhost:8080/api/messages/get').pipe().toPromise();
     }
 }

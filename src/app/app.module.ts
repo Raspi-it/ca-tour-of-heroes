@@ -15,28 +15,25 @@ import { CoreModule } from './core/core.module';
 
 import { AppComponent } from './app.component';
 import { AppStore } from './app.store';
-import { DataFeatureModule } from './features/data/data.feature.module';
 import { AppRoutingModule } from './app-routing.module';
 import { NavigationComponent } from './pages/components/navigation/navigation.component';
-import { MessagesComponent } from './pages/components/messages/messages.component';
+import { MessagesComponentModule } from './pages/components/messages/messages.component.module';
+import { DataFeatureModule } from './features/data/data.feature.module';
 
 @NgModule({
   declarations: [
     AppComponent,     
     
-    NavigationComponent,
-    MessagesComponent
+    NavigationComponent
   ],
   imports: [
-
-    // Actions nur unter passender Page (ggf. zstl Actions)
-    // Ngxs for Root -> AppState / Ngxs for Feature in Page Module
 
     BrowserModule,
     FormsModule,
     HttpClientModule,
     CoreModule,
 
+    MessagesComponentModule,
     DataFeatureModule,
 
     AppRoutingModule,

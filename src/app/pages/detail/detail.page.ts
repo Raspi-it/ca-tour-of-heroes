@@ -12,9 +12,10 @@ import { Observable } from "rxjs";
 })
 export class DetailPage implements OnInit {
 
-    @Select(DetailPageState.hero) hero$: Observable<HeroEntity>;
+    @Select(DetailPageState.hero) hero$!: Observable<HeroEntity>;
 
     hero_input: string;
+    id: number;
 
     constructor(
         private route: ActivatedRoute,
@@ -26,11 +27,11 @@ export class DetailPage implements OnInit {
     }
 
     async getHero() {
-        const id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
-        await this.store.dispatch(new DetailGetHeroByIdAction(id)).toPromise();
+        this.id = parseInt(this.route.snapshot.paramMap.get('id')!, 10);
+        await this.store.dispatch(new DetailGetHeroByIdAction(this.id)).toPromise();
     }
 
-    async save(hero) {
-        await this.store.dispatch(new DetailUpdateHeroAction([hero.id, this.hero_input])).toPromise();
+    async save() {
+        await this.store.dispatch(new DetailUpdateHeroAction([this.id, this.hero_input])).toPromise();
     }
 }

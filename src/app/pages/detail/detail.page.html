@@ -1,5 +1,3 @@
-
-
 <h2>{{(hero$ | async)?.name | uppercase}} Details</h2>
 <div><span>id: </span>{{(hero$ | async)?.id}}</div>
 <div>
@@ -7,4 +5,4 @@
   <input id="hero-name" [(ngModel)]="hero_input" placeholder="Hero name"/>
 </div>
 <button routerLink="/dashboard">go back</button>
-<button (click)="save(hero$)">save</button>
+<button (click)="save()" routerLink="/dashboard">save</button>

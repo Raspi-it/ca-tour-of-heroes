@@ -30,6 +30,7 @@ export interface MessagesStateModel {
 
 @Injectable()
 export class MessagesComponentState {
+
     @Selector()
     static messages({ messages }: MessagesStateModel) {
         return messages;
@@ -41,6 +42,19 @@ export class MessagesComponentState {
         private readonly clearMessagesUseCase: AbstractClearMessagesUseCase
     ) { }
 
+    @Action(PushMessageAction)
+    async pushMessage({ dispatch }: StateContext<MessagesStateModel>, { payload }: PushMessageAction) {
+        await this.pushMessagesUseCase.execute(payload);
+        dispatch(new GetMessageAction());
+
+        // const res = await this.pushMessagesUseCase.execute(payload);
+        // if (res instanceof AbstractCustomError) {
+        //     console.log('PushMessage FEHLER!');
+        // } else {
+        //     dispatch(new GetMessageAction());
+        // }
+    }
+
     @Action(GetMessageAction)
     getMessage({ patchState }: StateContext<MessagesStateModel>) {
         return from(this.getMessagesUseCase.execute()).pipe(
@@ -50,16 +64,6 @@ export class MessagesComponentState {
                 })
             })
         )
-    }
-
-    @Action(PushMessageAction)
-    async pushMessage({ dispatch }: StateContext<MessagesStateModel>, { payload }: PushMessageAction) {
-        const res = await this.pushMessagesUseCase.execute(payload);
-        if (res instanceof AbstractCustomError) {
-            console.log('PushMessage FEHLER!');
-        } else {
-            dispatch(new GetMessageAction());
-        }
     }
 
     @Action(ClearMessageAction)
