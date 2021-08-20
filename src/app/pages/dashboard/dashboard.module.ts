@@ -16,8 +16,6 @@ import { DashboardPage } from "./dashboard.page";
         CoreModule,
         CommonModule,
 
-        MessagesComponentModule,
-        DataFeatureModule,
         AppRoutingModule,
 
         NgxsModule.forFeature([

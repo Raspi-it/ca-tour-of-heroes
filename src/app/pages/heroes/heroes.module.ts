@@ -21,7 +21,6 @@ import { HeroesPageState } from "./heroes.page.state";
 
         AppRoutingModule,
 
-        MessagesComponentModule,
         DeleteHeroFeatureModule,
         AddHeroFeatureModule,
         DataFeatureModule
