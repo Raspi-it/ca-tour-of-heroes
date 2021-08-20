@@ -4,5 +4,5 @@
   <label for="hero-name">Hero name: </label>
   <input id="hero-name" [(ngModel)]="hero_input" placeholder="Hero name"/>
 </div>
-<button routerLink="/dashboard">go back</button>
+<button (click)="goBack()">go back</button>
 <button (click)="save()" routerLink="/dashboard">save</button>
