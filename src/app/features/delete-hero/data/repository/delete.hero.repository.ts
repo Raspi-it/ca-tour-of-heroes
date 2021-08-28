@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { HeroEntity } from "src/app/core/domain/entity/hero.entity";
 import { AbstractCustomError, ServerError } from "src/app/core/errors";
 import { AbstractDeleteHeroDataSource } from "../data-source/abstract.delete.hero.data.source";
 import { AbstractDeleteHeroRepository } from "./abstract.delete.hero.repository";
@@ -14,7 +13,7 @@ export class DeleteHeroRepository extends AbstractDeleteHeroRepository {
             if (!!(param && param.id)) {
                 await this.dataSource.deleteHero(param);
             } else {
-                throw new ServerError('missing param');
+                throw new ServerError();
             }
         } catch (error) {
             return new ServerError();

@@ -11,9 +11,13 @@ export class UpdateHeroRepository extends AbstractUpdateHeroRepository {
 
     async updateHero(param): Promise<HeroEntity | AbstractCustomError | void> {
         try {
-            await this.dataSource.updateHero(param);
+            if (!!(param)) {
+                await this.dataSource.updateHero(param);
+            } else {
+                throw new ServerError;
+            }
         } catch (error) {
-            return new ServerError();
+            return error;
         }
     }
 }

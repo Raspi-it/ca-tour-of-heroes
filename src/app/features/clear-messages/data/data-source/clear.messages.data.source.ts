@@ -1,6 +1,5 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AbstractBaseModel } from "src/app/core/data/base/abstract.base.model";
 import { AbstractClearMessagesDataSource } from "./abstract.clear.messages.data.source";
 
 @Injectable()

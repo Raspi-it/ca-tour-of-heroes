@@ -10,10 +10,10 @@ export class GetMessagesRepository extends AbstractGetMessagesRepository {
     async getMessages(): Promise<string[]> {
         try {
             const raw = await this.dataSource.getMessages();
-            // console.log(raw);
             return raw;
         } catch (error) {
             console.error(error);
-        } return [];
+            return error;
+        } 
     }
 }

@@ -19,8 +19,6 @@ export class MessagesComponent implements OnInit {
     ngOnInit() {
     }
 
-    // (clearMessageEvent)="clearMessage()" [messages]="messages$ | async"
-
     async clearMessage() {
       await this.store.dispatch(new ClearMessageAction);
     }

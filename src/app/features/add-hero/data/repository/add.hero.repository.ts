@@ -12,7 +12,7 @@ export class AddHeroRepository extends AbstractAddHeroRepository {
     async addHero(param): Promise<HeroEntity[] | AbstractCustomError | void> {
         try {
             if (!!(param && param.id)) {
-            await this.dataSource.addHero(param);
+                await this.dataSource.addHero(param);
             } else {
                 throw new ServerError('missing param');
             }

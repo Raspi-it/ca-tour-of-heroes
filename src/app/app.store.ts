@@ -11,7 +11,6 @@ export class AppGetHeroesAction {
 }
 
 export interface AppStateModel {
-    visibility?: string;
     heroes?: HeroEntity[];
 }
 

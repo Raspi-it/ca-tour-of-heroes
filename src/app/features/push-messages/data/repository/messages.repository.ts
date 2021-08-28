@@ -10,10 +10,14 @@ export class MessagesRepository extends AbstractMessagesRepository {
 
     async pushMessages(param): Promise<void | AbstractCustomError> {
         try {
-            this.dataSource.pushMessages(param);
+            if (!!(param)) {
+                this.dataSource.pushMessages(param);
+            } else {
+                throw new ServerError;
+            }
         } catch (error) {
             console.error(error);
-            return new ServerError(error?.error?.message);
+            return error;
         }
     }
 }

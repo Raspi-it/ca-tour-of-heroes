@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { AbstractBaseModel } from "src/app/core/data/base/abstract.base.model";
-import { HeroModel } from "src/app/core/data/models/hero.model";
 import { AbstractDataDataSource } from "./abstract.data.data.source";
 
 @Injectable()
